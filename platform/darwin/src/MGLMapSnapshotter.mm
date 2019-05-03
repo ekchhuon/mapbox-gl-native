@@ -1,5 +1,6 @@
 #import "MGLMapSnapshotter.h"
 
+#import <mbgl/mbgl.hpp>
 #import <mbgl/actor/actor.hpp>
 #import <mbgl/actor/scheduler.hpp>
 #import <mbgl/util/geo.hpp>
@@ -127,6 +128,10 @@ const CGFloat MGLSnapshotterMinimumPixelSize = 64;
     std::unique_ptr<mbgl::Actor<mbgl::MapSnapshotter::Callback>> _snapshotCallback;
 }
 
++ (void)initialize {
+    mbgl::Init();
+}
+
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
@@ -138,6 +143,8 @@ const CGFloat MGLSnapshotterMinimumPixelSize = 64;
                                          onQueue:_resultQueue
                                       completion:_completion];
     }
+
+    mbgl::Cleanup();
 }
 
 

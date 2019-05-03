@@ -3,6 +3,7 @@
 #import <GLKit/GLKit.h>
 #import <OpenGLES/EAGL.h>
 
+#include <mbgl/mbgl.hpp>
 #include <mbgl/map/map.hpp>
 #include <mbgl/map/map_options.hpp>
 #include <mbgl/annotation/annotation.hpp>
@@ -375,6 +376,8 @@ public:
 
 + (void)initialize
 {
+    mbgl::Init();
+
     if (self == [MGLMapView class])
     {
         [MGLSDKUpdateChecker checkForUpdates];
@@ -809,6 +812,8 @@ public:
     [_locationManager stopUpdatingLocation];
     [_locationManager stopUpdatingHeading];
     _locationManager.delegate = nil;
+
+    mbgl::Cleanup();
 }
 
 - (void)setDelegate:(nullable id<MGLMapViewDelegate>)delegate
